@@ -1,43 +1,6 @@
-# Pokemon-SV-Detection
+## poke deep yolox setup
 
-
-<img src="docs/0a8d7fce-000000040.jpg" >
-
-
-## 1. Index
-
-- [1. Index](#1-index)
-- [2. Introduction](#2-introduction)
-- [3. Updates!!](#3-updates)
-- [4. Coming soon](#4-coming-soon)
-- [5. Quick Start](#5-quick-start)
-- [6. Param setting](#6-param-setting)
-  - [6.1. Google Drive](#61-google-drive)
-- [7. download yolox model](#7-download-yolox-model)
-- [8. poke deep model train](#8-poke-deep-model-train)
-- [9. Inference](#9-inference)
-
-
-## 2. Introduction
-
-ポケットモンスター SV のデータセットにYOLOXで学習させてみました．
-
-
-
-## 3. Updates!!
-* 【2022/11/19】動作確認用データセット
-* 【2022/11/21】ver1 データセットアップデート
-
-## 4. Coming soon
-- [ ] ver2 データセット
-
-
-## 5. Quick Start
-
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://drive.google.com/file/d/1TA7EGGOEYJWsonD5XUhfrJCYhN1X3acW/view?usp=sharing)
-
-
-## 6. Param setting
+## Param setting
 
 
 ```python
@@ -51,7 +14,7 @@ config_file = 'configs/yolox/yolox_s_8x8_300e_PokeSVcoco.py'
 checkpoint_file = work_dir + '/epoch_300.pth'
 ```
 
-### 6.1. Google Drive
+### Google Drive
 
 
 ```python
@@ -147,7 +110,7 @@ drive.mount('/content/drive')
 
 ```
 
-## 7. download yolox model
+## download yolox model
 
 
 
@@ -160,7 +123,7 @@ drive.mount('/content/drive')
 #%cp configs/yolox/yolox_s_8x8_300e_coco.py configs/yolox/yolox_l_8x8_300e_ika.py
 ```
 
-## 8. poke deep model train
+## poke deep model train
 
 
 ```python
@@ -846,7 +809,7 @@ os.environ['CUDA_LAUNCH_BLOCKING'] = "1"
 !nvidia-smi
 ```
 
-## 9. Inference
+## Inference
 
 
 ```python
