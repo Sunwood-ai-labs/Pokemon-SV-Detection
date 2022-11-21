@@ -11,11 +11,11 @@
 - [3. Updates!!](#3-updates)
 - [4. Coming soon](#4-coming-soon)
 - [5. Quick Start](#5-quick-start)
-- [Param setting](#param-setting)
-  - [Google Drive](#google-drive)
-- [download yolox model](#download-yolox-model)
-- [poke deep model train](#poke-deep-model-train)
-- [Inference](#inference)
+- [6. Param setting](#6-param-setting)
+  - [6.1. Google Drive](#61-google-drive)
+- [7. download yolox model](#7-download-yolox-model)
+- [8. poke deep model train](#8-poke-deep-model-train)
+- [9. Inference](#9-inference)
 
 
 ## 2. Introduction
@@ -37,7 +37,7 @@
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://drive.google.com/file/d/1TA7EGGOEYJWsonD5XUhfrJCYhN1X3acW/view?usp=sharing)
 
 
-## Param setting
+## 6. Param setting
 
 
 ```python
@@ -51,7 +51,7 @@ config_file = 'configs/yolox/yolox_s_8x8_300e_PokeSVcoco.py'
 checkpoint_file = work_dir + '/epoch_300.pth'
 ```
 
-### Google Drive
+### 6.1. Google Drive
 
 
 ```python
@@ -147,7 +147,7 @@ drive.mount('/content/drive')
 
 ```
 
-## download yolox model
+## 7. download yolox model
 
 
 
@@ -160,7 +160,7 @@ drive.mount('/content/drive')
 #%cp configs/yolox/yolox_s_8x8_300e_coco.py configs/yolox/yolox_l_8x8_300e_ika.py
 ```
 
-## poke deep model train
+## 8. poke deep model train
 
 
 ```python
@@ -846,7 +846,7 @@ os.environ['CUDA_LAUNCH_BLOCKING'] = "1"
 !nvidia-smi
 ```
 
-## Inference
+## 9. Inference
 
 
 ```python
