@@ -20,7 +20,7 @@
 
 ## 2. Introduction
 
-ポケットモンスター SV のデータセットにYOLOXで学習させてみました．
+[ポケットモンスター SV のデータセット](https://github.com/makiMakiTi/Pokemon-SV-Datasets)に [mmdetectionのYOLOX](https://github.com/open-mmlab/mmdetection)で学習させてみました．
 
 
 
@@ -67,9 +67,9 @@ drive.mount('/content/drive')
 #%cd /content/drive/MyDrive/Ika
 %cd /content/drive/MyDrive/PROJECT/201_HaMaruki/201_60_PokemonSV/Pokemon-SV-Detection/mmdetection
 ```
-
+```bash
     /content/drive/MyDrive/PROJECT/201_HaMaruki/201_60_PokemonSV/Pokemon-SV-Detection/mmdetection
-
+```
 
 
 ```python
@@ -82,7 +82,7 @@ drive.mount('/content/drive')
 %cd ika-ika-detection
 !pip install -e .
 ```
-
+```bash
     Looking in indexes: https://pypi.org/simple, https://us-python.pkg.dev/colab-wheels/public/simple/
     Requirement already satisfied: openmim in /usr/local/lib/python3.7/dist-packages (0.3.3)
     Requirement already satisfied: tabulate in /usr/local/lib/python3.7/dist-packages (from openmim) (0.8.10)
@@ -140,7 +140,7 @@ drive.mount('/content/drive')
         Can't uninstall 'mmdet'. No files were found to uninstall.
       Running setup.py develop for mmdet
     Successfully installed mmdet-2.25.3
-
+```
 
 
 ```python
@@ -177,7 +177,7 @@ os.environ['CUDA_LAUNCH_BLOCKING'] = "1"
 !python tools/train.py $config_file --work-dir $work_dir
 #!python tools/train.py configs/yolox/yolox_s_8x8_300e_coco_ika3.py
 ```
-
+```bash
     /usr/local/lib/python3.7/dist-packages/mmcv/__init__.py:21: UserWarning: On January 1, 2023, MMCV will release v2.0.0, in which it will remove components related to the training process and add a data transformation module. In addition, it will rename the package names mmcv to mmcv-lite and mmcv-full to mmcv. See https://github.com/open-mmlab/mmcv/blob/master/docs/en/compatibility.md for more details.
       'On January 1, 2023, MMCV will release v2.0.0, in which it will remove '
     /content/drive/MyDrive/PROJECT/201_HaMaruki/201_60_PokemonSV/Pokemon-SV-Detection/mmdetection/mmdet/utils/setup_env.py:39: UserWarning: Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed.
@@ -839,7 +839,7 @@ os.environ['CUDA_LAUNCH_BLOCKING'] = "1"
     INFO:mmdet:Now best checkpoint is saved as best_bbox_mAP_epoch_70.pth.
     2022-11-21 10:56:38,119 - mmdet - INFO - Best bbox_mAP is 0.0440 at 70 epoch.
     INFO:mmdet:Best bbox_mAP is 0.0440 at 70 epoch.
-
+```
 
 
 ```python
