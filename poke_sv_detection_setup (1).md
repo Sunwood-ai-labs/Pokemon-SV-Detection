@@ -1,41 +1,4 @@
-# Pokemon-SV-Detection
-
-
-<img src="docs/0a8d7fce-000000040.jpg" >
-
-
-## 1. Index
-
-- [1. Index](#1-index)
-- [2. Introduction](#2-introduction)
-- [3. Updates!!](#3-updates)
-- [4. Coming soon](#4-coming-soon)
-- [5. Quick Start](#5-quick-start)
-- [Param setting](#param-setting)
-  - [Google Drive](#google-drive)
-- [download yolox model](#download-yolox-model)
-- [poke deep model train](#poke-deep-model-train)
-- [Inference](#inference)
-
-
-## 2. Introduction
-
-ポケットモンスター SV のデータセットにYOLOXで学習させてみました．
-
-
-
-## 3. Updates!!
-* 【2022/11/19】動作確認用データセット
-* 【2022/11/21】ver1 データセットアップデート
-
-## 4. Coming soon
-- [ ] ver2 データセット
-
-
-## 5. Quick Start
-
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://drive.google.com/file/d/1TA7EGGOEYJWsonD5XUhfrJCYhN1X3acW/view?usp=sharing)
-
+## poke deep yolox setup
 
 ## Param setting
 
