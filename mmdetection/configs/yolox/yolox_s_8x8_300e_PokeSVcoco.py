@@ -2,6 +2,12 @@ _base_ = ['../_base_/schedules/schedule_1x.py', '../_base_/default_runtime.py']
 
 img_scale = (640, 640)  # height, width
 
+
+classes = ('Delvil', 'Digda', 'Gourton', 'Hanecco', 'Hellgar', \
+            'Hogator', 'Kofukimushi', 'Koraidon', 'Kuwassu', 'Nyahoja', \
+            'Tarountula', 'Yayakoma', 'Youngoose', 'player', )
+
+
 # model settings
 model = dict(
     type='YOLOX',
@@ -17,14 +23,15 @@ model = dict(
         num_csp_blocks=3), # num_csp_blocks=1),
     bbox_head=dict(
         # type='YOLOXHead', num_classes=80, in_channels=128, feat_channels=128),
-        type='YOLOXHead', num_classes=2, in_channels=256, feat_channels=256),
+        type='YOLOXHead', num_classes=len(classes), in_channels=256, feat_channels=256),
     train_cfg=dict(assigner=dict(type='SimOTAAssigner', center_radius=2.5)),
     # In order to align the source code, the threshold of the val phase is
     # 0.01, and the threshold of the test phase is 0.001.
     test_cfg=dict(score_thr=0.01, nms=dict(type='nms', iou_threshold=0.65)))
 
 # dataset settings
-data_root = 'data/coco/'
+# data_root = 'data/coco/'
+data_root = '/content/drive/MyDrive/PROJECT/201_HaMaruki/201_60_PokemonSV/Pokemon-SV-Datasets/datasets/v1.0/'
 dataset_type = 'CocoDataset'
 
 train_pipeline = [
@@ -55,15 +62,13 @@ train_pipeline = [
     dict(type='Collect', keys=['img', 'gt_bboxes', 'gt_labels'])
 ]
 
-classes = ('melon-soda', 'orange')
-
 train_dataset = dict(
     type='MultiImageMixDataset',
     dataset=dict(
         type=dataset_type,
         classes=classes,
-        ann_file=data_root + 'train/annotations/instances_default.json',
-        img_prefix=data_root + 'train/images/',
+        ann_file=data_root + 'pokemon_sv_train.json',
+        img_prefix=data_root + 'train2017/',
         pipeline=[
             dict(type='LoadImageFromFile'),
             dict(type='LoadAnnotations', with_bbox=True)
@@ -91,21 +96,21 @@ test_pipeline = [
 ]
 
 data = dict(
-    samples_per_gpu=2,
-    workers_per_gpu=2,
+    samples_per_gpu=3,
+    workers_per_gpu=3,
     persistent_workers=True,
     train=train_dataset,
     val=dict(
         type=dataset_type,
         classes=classes,
-        ann_file=data_root + 'valid/annotations/instances_default.json',
-        img_prefix=data_root + 'valid/images/',
+        ann_file=data_root + 'pokemon_sv_valid.json',
+        img_prefix=data_root + 'val2017/',
         pipeline=test_pipeline),
     test=dict(
         type=dataset_type,
         classes=classes,
-        ann_file=data_root + 'valid/annotations/instances_default.json',
-        img_prefix=data_root + 'valid/images/',
+        ann_file=data_root + 'pokemon_sv_valid.json',
+        img_prefix=data_root + 'val2017/',
         pipeline=test_pipeline))
 
 # optimizer
@@ -119,7 +124,7 @@ optimizer = dict(
     paramwise_cfg=dict(norm_decay_mult=0., bias_decay_mult=0.))
 optimizer_config = dict(grad_clip=None)
 
-max_epochs = 300
+max_epochs = 500
 num_last_epochs = 15
 resume_from = None
 interval = 10
@@ -148,12 +153,15 @@ custom_hooks = [
         num_last_epochs=num_last_epochs,
         interval=interval,
         priority=48),
-    dict(
-        type='ExpMomentumEMAHook',
-        resume_from=resume_from,
-        momentum=0.0001,
-        priority=49)
+    #
+    # inference 
+    # dict(
+    #     type='ExpMomentumEMAHook',
+    #     resume_from=resume_from,
+    #     momentum=0.0001,
+    #     priority=49)
 ]
+
 checkpoint_config = dict(interval=interval)
 evaluation = dict(
     save_best='auto',
@@ -164,12 +172,25 @@ evaluation = dict(
     interval=interval,
     dynamic_intervals=[(max_epochs - num_last_epochs, 1)],
     metric='bbox')
-log_config = dict(interval=50)
+
+# ----------------------------------
+# logger
+#
+# log_config = dict(interval=50)
+log_config = dict(  # config to register logger hook
+    interval=50,  # Interval to print the log
+    hooks=[
+        dict(type='TensorboardLoggerHook')  # The Tensorboard logger is also supported
+        # dict(type='TextLoggerHook')
+    ])  # The logger used to record the training process.
+
 
 # NOTE: `auto_scale_lr` is for automatically scaling LR,
 # USER SHOULD NOT CHANGE ITS VALUES.
 # base_batch_size = (8 GPUs) x (8 samples per GPU)
 auto_scale_lr = dict(base_batch_size=64)
 
+
 # We can use the pre-trained model to obtain higher performance
-load_from = 'checkpoints/yolox_l_8x8_300e_coco_20211126_140236-d3bd2b23.pth'
+#load_from = 'checkpoints/yolox_l_8x8_300e_coco_20211126_140236-d3bd2b23.pth'
+load_from = 'work_dirs/yolox_s_8x8_300e_PokeSVcoco_v1_300/epoch_300.pth'
