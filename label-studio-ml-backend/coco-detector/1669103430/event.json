@@ -1,0 +1,192 @@
+{
+  "event": "ANNOTATION_CREATED",
+  "job_id": "1669103430",
+  "data": {
+    "annotation": {
+      "id": 333,
+      "result": [
+        {
+          "id": "Ge8TxiD8kJ",
+          "type": "rectanglelabels",
+          "score": 0.9329062104225159,
+          "value": {
+            "x": 16.74298429800794,
+            "y": 37.35634548212188,
+            "width": 34.97478011386846,
+            "height": 60.57480955435558,
+            "rotation": 0,
+            "rectanglelabels": [
+              "Cat"
+            ]
+          },
+          "origin": "prediction",
+          "to_name": "image",
+          "from_name": "label",
+          "image_rotation": 0,
+          "original_width": 612,
+          "original_height": 612
+        },
+        {
+          "id": "q-vqAslYRp",
+          "type": "rectanglelabels",
+          "score": 0.6468498110771179,
+          "value": {
+            "x": 25.3327537985409,
+            "y": 18.594290540109274,
+            "width": 59.774520973754086,
+            "height": 81.40570945989073,
+            "rotation": 0,
+            "rectanglelabels": [
+              "Cat"
+            ]
+          },
+          "origin": "prediction",
+          "to_name": "image",
+          "from_name": "label",
+          "image_rotation": 0,
+          "original_width": 612,
+          "original_height": 612
+        },
+        {
+          "id": "LNvuUdTGOR",
+          "type": "rectanglelabels",
+          "score": 0.98467618227005,
+          "value": {
+            "x": 34.43202099768944,
+            "y": 6.8574213514141,
+            "width": 51.96300332063164,
+            "height": 91.98479745902267,
+            "rotation": 0,
+            "rectanglelabels": [
+              "Dog"
+            ]
+          },
+          "origin": "prediction",
+          "to_name": "image",
+          "from_name": "label",
+          "image_rotation": 0,
+          "original_width": 612,
+          "original_height": 612
+        }
+      ],
+      "was_cancelled": false,
+      "ground_truth": false,
+      "created_at": "2022-11-22T07:50:30.659657Z",
+      "updated_at": "2022-11-22T07:50:30.659678Z",
+      "lead_time": 2.582,
+      "prediction": {},
+      "result_count": 0,
+      "task": 338,
+      "completed_by": 2,
+      "parent_prediction": 3,
+      "parent_annotation": null
+    },
+    "project": {
+      "id": 8,
+      "task_number": 3,
+      "finished_task_number": 3,
+      "total_predictions_number": 3,
+      "total_annotations_number": 4,
+      "num_tasks_with_annotations": 3,
+      "useful_annotation_number": 4,
+      "ground_truth_number": 0,
+      "skipped_annotations_number": 0,
+      "title": "ML-test",
+      "description": "",
+      "label_config": "<View>\n  <Image name=\"image\" value=\"$image\"/>\n  <RectangleLabels name=\"label\" toName=\"image\">\n\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000<Label value=\"Cat\" predicted_values=\"cat\" background=\"red\"/>\n\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000<Label value=\"Dog\" predicted_values=\"dog\" background=\"blue\"/>\n  </RectangleLabels>\n</View>",
+      "parsed_label_config": {
+        "label": {
+          "type": "RectangleLabels",
+          "inputs": [
+            {
+              "type": "Image",
+              "value": "image"
+            }
+          ],
+          "labels": [
+            "Cat",
+            "Dog"
+          ],
+          "to_name": [
+            "image"
+          ],
+          "labels_attrs": {
+            "Cat": {
+              "value": "Cat",
+              "background": "red",
+              "predicted_values": "cat"
+            },
+            "Dog": {
+              "value": "Dog",
+              "background": "blue",
+              "predicted_values": "dog"
+            }
+          }
+        }
+      },
+      "expert_instruction": "",
+      "show_instruction": false,
+      "show_skip_button": true,
+      "enable_empty_annotation": true,
+      "reveal_preannotations_interactively": false,
+      "show_annotation_history": false,
+      "show_collab_predictions": true,
+      "evaluate_predictions_automatically": false,
+      "token": "905455cd6a9a5987",
+      "result_count": 0,
+      "color": "#FFFFFF",
+      "maximum_annotations": 1,
+      "min_annotations_to_start_training": 0,
+      "control_weights": {
+        "label": {
+          "type": "RectangleLabels",
+          "labels": {
+            "Cat": 1.0,
+            "Dog": 1.0
+          },
+          "overall": 1.0
+        }
+      },
+      "model_version": "",
+      "data_types": {
+        "image": "Image"
+      },
+      "is_draft": false,
+      "is_published": false,
+      "created_at": "2022-11-22T06:39:47.107325Z",
+      "updated_at": "2022-11-22T07:33:16.380295Z",
+      "sampling": "Sequential sampling",
+      "skip_queue": "REQUEUE_FOR_OTHERS",
+      "show_ground_truth_first": false,
+      "show_overlap_first": false,
+      "overlap_cohort_percentage": 100,
+      "task_data_login": null,
+      "task_data_password": null,
+      "pinned_at": null,
+      "organization": 1,
+      "created_by": 2
+    },
+    "task": {
+      "id": 338,
+      "data": {
+        "image": "/data/upload/8/c7f6b8de-istockphoto-1138523235-612x612.jpg"
+      },
+      "meta": {},
+      "created_at": "2022-11-22T07:45:46.323552Z",
+      "updated_at": "2022-11-22T07:50:30.777612Z",
+      "is_labeled": true,
+      "overlap": 1,
+      "inner_id": 4,
+      "total_annotations": 2,
+      "cancelled_annotations": 0,
+      "total_predictions": 1,
+      "comment_count": 0,
+      "unresolved_comment_count": 0,
+      "last_comment_updated_at": null,
+      "project": 8,
+      "updated_by": 2,
+      "file_upload": 338,
+      "comment_authors": []
+    }
+  }
+}

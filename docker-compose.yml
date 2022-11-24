@@ -1,5 +1,5 @@
 services:
-  nvidia_pytorch:
+  poke_poke_mmdetection:
     build:
       context: .
       dockerfile: Dockerfile

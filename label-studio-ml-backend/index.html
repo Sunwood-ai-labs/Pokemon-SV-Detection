@@ -1,0 +1,62 @@
+
+
+
+<!doctype html>
+<html lang="en">
+<head>
+  <title>Label Studio</title>
+  <meta charset="utf-8">
+  <meta name="author" content=""/>
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, shrink-to-fit=no">
+
+  <!-- Address string color -->
+  <meta name="theme-color" content="#272727"> <!-- Chrome, Firefox OS and Opera -->
+  <meta name="msapplication-navbutton-color" content="#272727">  <!-- Windows Phone -->
+  <meta name="apple-mobile-web-app-status-bar-style" content="#272727">  <!-- iOS Safari -->
+
+  <link href="/static/images/favicon.58c0a5114450.ico" rel="shortcut icon"/>
+  <link href="/static/css/main.de66392810e2.css" rel="stylesheet"/>
+  <link href="/react-app/main.css?v=none" rel="stylesheet">
+
+  
+<link rel="stylesheet" href="/static/css/login.b79a5e51b1bf.css"/>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-129877673-1"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-129877673-1');
+</script>
+
+</head>
+
+<body>
+
+<div class="login_page">
+  <h1>Welcome to Label Studio Community Edition </h1>
+  <h2>A full-fledged open source solution for data labeling</h2>
+
+  <img src="/static/images/opossum_hanging.2fa77848bd0c.svg" height="128px" />
+
+  <div class="toggle">
+    
+        <a href="/user/signup" class="">Sign up</a>
+        <a href="/user/login" class="active">Log in</a>
+    
+  </div>
+
+  
+  <form id="login-form" action="/user/login/?next=/projects/" method="post">
+    <input type="hidden" name="csrfmiddlewaretoken" value="meyrPIf54vxkdq8s5a6GFBuzxDTTaYzQjQUTyiG1jsZcZaoI4J3NqhRRz40c2asI">
+    <p><input type="text" class="ls-input" name="email" id="email" placeholder="Email" value=""></p>
+    <p><input type="password" class="ls-input" name="password" id="password" placeholder="Password"></p>
+    
+    <p><button type="submit" aria-label="Log In" class="ls-button ls-button_look_primary">Log in</button></p>
+  </form>
+
+
+
+
+</body>
+</html>
