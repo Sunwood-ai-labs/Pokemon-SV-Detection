@@ -16,6 +16,7 @@
 - [7. download yolox model](#7-download-yolox-model)
 - [8. poke deep model train](#8-poke-deep-model-train)
 - [9. Inference](#9-inference)
+- [memo](#memo)
 
 
 ## 2. Introduction
@@ -886,4 +887,10 @@ for f in pathlib.Path('/content/drive/MyDrive/PROJECT/201_HaMaruki/201_60_Pokemo
 
 
 
+## memo
 
+```bash
+docker-compose exec label_studio_ml /bin/bash
+docker-compose exec poke_poke_mmdetection /bin/bash
+
+```
