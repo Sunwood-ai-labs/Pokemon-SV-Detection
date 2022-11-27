@@ -14,7 +14,9 @@ from botocore.exceptions import ClientError
 from urllib.parse import urlparse
 
 
-logger = logging.getLogger(__name__)
+# logging.basicConfig(level=logging.DEBUG)
+# logger = logging.getLogger(__name__)
+from loguru import logger
 
 
 class MMDetection(LabelStudioMLBase):
@@ -23,7 +25,7 @@ class MMDetection(LabelStudioMLBase):
     def __init__(self, config_file=None,
                  checkpoint_file=None,
                  image_dir=None,
-                 labels_file=None, score_threshold=0.3, device='cpu', **kwargs):
+                 labels_file=None, score_threshold=0.5, device='cpu', **kwargs):
         """
         Load MMDetection model from config and checkpoint into memory.
         (Check https://mmdetection.readthedocs.io/en/v1.2.0/GETTING_STARTED.html#high-level-apis-for-testing-images)
@@ -66,7 +68,8 @@ class MMDetection(LabelStudioMLBase):
                 for predicted_value in label_attrs.get('predicted_values', '').split(','):
                     self.label_map[predicted_value] = label_name
 
-        print('Load new model from: ', config_file, checkpoint_file)
+        logger.info('Load new model from: {}'.format(checkpoint_file))
+        # print('Load new model from: ', config_file, checkpoint_file)
         self.model = init_detector(config_file, checkpoint_file, device=device)
         self.score_thresh = score_threshold
 
@@ -88,6 +91,8 @@ class MMDetection(LabelStudioMLBase):
         return image_url
 
     def predict(self, tasks, **kwargs):
+        logger.info("predict start ...")
+        
         assert len(tasks) == 1
         task = tasks[0]
         image_url = self._get_image_url(task)
@@ -100,14 +105,14 @@ class MMDetection(LabelStudioMLBase):
             output_label = self.label_map.get(label, label)
 
             if output_label not in self.labels_in_config:
-                print(output_label + ' label not found in project config.')
+                logger.info(output_label + ' label not found in project config.')
                 continue
             for bbox in bboxes:
                 bbox = list(bbox)
                 if not bbox:
                     continue
                 score = float(bbox[-1])
-                print("score : {}".format(score))
+                logger.info("label : {:>10}, score : {}".format(label, score))
                 if score < self.score_thresh:
                     continue
                 x, y, xmax, ymax = bbox[:4]

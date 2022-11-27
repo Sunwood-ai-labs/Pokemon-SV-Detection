@@ -16,8 +16,10 @@ services:
     volumes:
       - .:/home/Pokemon-SV-Detection
       - D:\PROJECT\201_HaMaruki\201_60_PokemonSV\Pokemon-SV-Datasets:/home/pokemon-sv-datasets
+      - D:\PROJECT\201_HaMaruki\201_60_PokemonSV\Pokemon-SV-Work_dirs:/home/pokemon-sv-work_dirs
       
-      
+    working_dir: /home/Pokemon-SV-Detection/mmdetection
+
     ports:
       - "6161:6161"
     # command:
@@ -39,8 +41,10 @@ services:
       # label-studio-ml param 
       #
       - LABEL_STUDIO_HOSTNAME=http://192.168.0.100:8080/
-      - config_file=/home/checkpoints/faster_rcnn_r50_fpn_1x_coco.py
-      - checkpoint_file=/home/checkpoints/faster_rcnn_r50_fpn_1x_coco_20200130-047c8118.pth
+      # - config_file=/home/checkpoints/faster_rcnn_r50_fpn_1x_coco.py
+      # - checkpoint_file=/home/checkpoints/faster_rcnn_r50_fpn_1x_coco_20200130-047c8118.pth
+      - config_file=/home/Pokemon-SV-Detection/mmdetection/configs/yolox/yolox_s_8x8_300e_PokeSVcoco.py
+      - checkpoint_file=/home/pokemon-sv-work_dirs/yolox_s_8x8_300e_PokeSVcoco_v1.3_600/epoch_600.pth
       - device=cuda:0
 
     deploy:
@@ -51,7 +55,9 @@ services:
               count: 1
               capabilities: [gpu]
     volumes:
-      - .:/home/Pokemon-SV-Detection
+      - .:/home/Pokemon-SV-Detection/
+      - D:\PROJECT\201_HaMaruki\201_60_PokemonSV\Pokemon-SV-Work_dirs:/home/pokemon-sv-work_dirs
+    working_dir: /home/Pokemon-SV-Detection/label-studio-ml-backend
     ports:
       - "5555:5555"
     # command:

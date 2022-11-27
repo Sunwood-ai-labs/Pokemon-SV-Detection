@@ -29,6 +29,8 @@ from rq.registry import StartedJobRegistry, FinishedJobRegistry, FailedJobRegist
 from rq.job import Job
 from colorama import Fore
 
+from loguru import logger
+
 from label_studio_tools.core.utils.params import get_bool_env
 from label_studio_tools.core.label_config import parse_config
 from label_studio_tools.core.utils.io import get_local_path
@@ -114,6 +116,7 @@ class JobManager(object):
 
     def _get_result_from_job_id(self, job_id):
         """Return job result by job id"""
+        logger.info("Return job result by job id")
         raise NotImplementedError
 
     def iter_finished_jobs(self):
@@ -125,6 +128,7 @@ class JobManager(object):
         """
         for job_id in self.iter_finished_jobs():
             logger.debug(f'Try job_id={job_id}')
+            logger.info(f'Try job_id={job_id}')
             try:
                 result = self.get_result_from_job_id(job_id)
             except Exception as exc:
@@ -162,10 +166,11 @@ class SimpleJobManager(JobManager):
 
     def __init__(self, model_dir='.'):
         self.model_dir = model_dir
+        self.job_root_dir = "jobs"
 
     @contextmanager
     def start_run(self, event, data, job_id):
-        job_dir = self._job_dir(job_id)
+        job_dir = self.job_root_dir + "/" + self._job_dir(job_id)
         os.makedirs(job_dir, exist_ok=True)
         with open(os.path.join(job_dir, 'event.json'), mode='w') as f:
             event_data = {'event': event, 'job_id': job_id}
@@ -190,12 +195,12 @@ class SimpleJobManager(JobManager):
         if not os.path.exists(job_dir):
             logger.warning(f"=> Warning: {job_id} dir doesn't exist. "
                            f"It seems that you don't have specified model dir.")
-            return None
+            return {}
         result_file = os.path.join(job_dir, self.JOB_RESULT)
         if not os.path.exists(result_file):
             logger.warning(f"=> Warning: {job_id} dir doesn't contain result file. "
                            f"It seems that previous training session ended with error.")
-            return None
+            return {}
         logger.debug(f'Read result from {result_file}')
         with open(result_file) as f:
             result = json.load(f)
@@ -320,10 +325,10 @@ class LabelStudioMLBase(ABC):
         return {}
 
     def get_local_path(self, url, project_dir=None):
-        print("==========================================================")
-        print("url : {}".format(url))
+        logger.info("==========================================================")
+        logger.info("url : {}".format(url))
         self.hostname = "http://192.168.0.100:8080"
-        print("self.hostname : {}".format(self.hostname))
+        logger.info("self.hostname : {}".format(self.hostname))
         return get_local_path(url, project_dir=project_dir, hostname=self.hostname, access_token=self.access_token)
 
 
@@ -511,6 +516,8 @@ class LabelStudioMLManager(object):
         @return:
         Current model
         """
+        
+        logger.info('Fetch ' + project + ' from local directory')
         # update kwargs with init kwargs from class (e.g. --with start arg)
         kwargs.update(cls.init_kwargs)
         if not os.getenv('LABEL_STUDIO_ML_BACKEND_V2', default=True):
@@ -605,6 +612,8 @@ class LabelStudioMLManager(object):
         @return:
         Predictions in LS format
         """
+        logger.debug('start predict ...')
+        
         if not os.getenv('LABEL_STUDIO_ML_BACKEND_V2', default=True):
             if try_fetch:
                 m = cls.fetch(project, label_config, force_reload)

@@ -7,7 +7,8 @@ from rq.exceptions import NoSuchJobError
 from .model import LabelStudioMLManager, LABEL_STUDIO_ML_BACKEND_V2_DEFAULT
 from .exceptions import exception_handler
 
-logger = logging.getLogger(__name__)
+# logger = logging.getLogger(__name__)
+from loguru import logger
 
 _server = Flask(__name__)
 _manager = LabelStudioMLManager()
@@ -59,6 +60,7 @@ def _predict():
 @_server.route('/setup', methods=['POST'])
 @exception_handler
 def _setup():
+    logger.info("setup program")
     data = request.json
     logger.debug(data)
     project = data.get('project')
@@ -115,6 +117,8 @@ def _is_training():
 @_server.route('/', methods=['GET'])
 @exception_handler
 def health():
+    logger.info("health program")
+    
     return jsonify({
         'status': 'UP',
         'model_dir': _manager.model_dir,

@@ -893,4 +893,27 @@ for f in pathlib.Path('/content/drive/MyDrive/PROJECT/201_HaMaruki/201_60_Pokemo
 docker-compose exec label_studio_ml /bin/bash
 docker-compose exec poke_poke_mmdetection /bin/bash
 
+
+cp /home/Pokemon-SV-Detection/mmdetection/replacement/path.py /opt/conda/lib/python3.8/site-packages/mmcv/utils/path.py
+cp /home/Pokemon-SV-Detection/label-studio-ml-backend/coco-detector/mmdetection.py /home/label-studio-ml-backend/coco-detector/mmdetection.py
+
+cp /home/Pokemon-SV-Detection/label-studio-ml-backend/label_studio_ml/model.py /home/label-studio-ml-backend/label_studio_ml/model.py 
+
+```
+
+
+```bash
+Traceback (most recent call last):
+  File "/home/label-studio-ml-backend/label_studio_ml/model.py", line 129, in get_result_from_last_job
+    result = self.get_result_from_job_id(job_id)
+  File "/home/label-studio-ml-backend/label_studio_ml/model.py", line 111, in get_result_from_job_id
+    assert isinstance(result, dict)
+AssertionError
+[2022-11-25 01:26:12,044] [ERROR] [label_studio_ml.model::get_result_from_last_job::131] 1669104891 job returns exception: 
+Traceback (most recent call last):
+  File "/home/label-studio-ml-backend/label_studio_ml/model.py", line 129, in get_result_from_last_job
+    result = self.get_result_from_job_id(job_id)
+  File "/home/label-studio-ml-backend/label_studio_ml/model.py", line 111, in get_result_from_job_id
+    assert isinstance(result, dict)
+AssertionError
 ```
