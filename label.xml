@@ -1,0 +1,21 @@
+<View>
+    <Image name="image" value="$image"/>
+    <RectangleLabels name="label" toName="image">
+    
+    
+        <Label value="player" predicted_values="player" background="#FFA39E"/>
+        <Label value="Hogator" predicted_values="Hogator"  background="#D4380D"/>
+        <Label value="Kuwassu" predicted_values="Kuwassu"  background="#FFC069"/>
+        <Label value="Nyahoja" predicted_values="Nyahoja"  background="#AD8B00"/>
+        <Label value="Gourton" predicted_values="Gourton"  background="#c5ff9e"/>
+        <Label value="Tarountula" predicted_values="Tarountula"  background="#129900"/>
+        <Label value="Yayakoma" predicted_values="Hogator"  background="#ff0d00"/>
+        <Label value="Hanecco" predicted_values="Hanecco"  background="#e7da83"/>
+        <Label value="Kofukimushi" predicted_values="Kofukimushi"  background="#000000"/>
+        <Label value="Delvil" predicted_values="Delvil"  background="#8f0700"/>
+        <Label value="Hellgar" predicted_values="Hellgar"  background="#661600"/>
+        <Label value="Koraidon" predicted_values="Koraidon"  background="#ff1472"/>
+        <Label value="Digda" predicted_values="Digda"  background="#c75a00"/>
+        <Label value="Youngoose" predicted_values="Youngoose"  background="#ffe224"/>
+    </RectangleLabels>
+</View>
