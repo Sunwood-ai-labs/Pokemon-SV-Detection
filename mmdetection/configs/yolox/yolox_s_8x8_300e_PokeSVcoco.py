@@ -3,9 +3,21 @@ _base_ = ['../_base_/schedules/schedule_1x.py', '../_base_/default_runtime.py']
 img_scale = (640, 640)  # height, width
 
 
-classes = ('Delvil', 'Digda', 'Gourton', 'Hanecco', 'Hellgar', \
-            'Hogator', 'Kofukimushi', 'Koraidon', 'Kuwassu', 'Nyahoja', \
-            'Tarountula', 'Yayakoma', 'Youngoose', 'player', )
+# dataset settings
+# data_root = 'data/coco/'
+# data_root = '/content/drive/MyDrive/PROJECT/201_HaMaruki/201_60_PokemonSV/Pokemon-SV-Datasets/datasets/v1.0/'
+data_root = '/home/pokemon-sv-datasets/datasets/v2.2/'
+dataset_type = 'CocoDataset'
+
+# classes = ('Delvil', 'Digda', 'Gourton', 'Hanecco', 'Hellgar', \
+#             'Hogator', 'Kofukimushi', 'Koraidon', 'Kuwassu', 'Nyahoja', \
+#             'Tarountula', 'Yayakoma', 'Youngoose', 'player', )
+classes = ('Amemoth','Ametama','Bassrao','Buoysel','Capsakid','Clodsire','Delvil','Digda','Dojoach','Donmel','Dorobanko','Eleson','Ennewt','Flamigo','Flittle','Floragato','Fuwante','Ghos','Gomazou','Gourton','Hanecco','Hellgar','Himanuts','Hinoyakoma','Hogator','Hoshigarisu','Iwanko','Kamukame','Kirlia','Koduck','Kofukimushi','Koiking','Koraidon','Kuwassu','Makunoshita','Mankey','Maril','Maschiff','Meecle','Merriep','Mibrim','Mukubird','Nacli','Nokocchi','Numera','Nyahoja','Nymble','Pamo','Pawmo','Pichu','Pinpuku','Popocco','Pupimocchi','Pupurin','Purin','Ralts','Riolu','Ruriri','Shikijika','Shroodle','Sleepe','Smoliv','Squawkabilly','Strike','Tadbulb','Tamagetake','Tandon','Tarountula','Tyltto','Upah','Usohachi','Watacco','Yamikarasu','Yayakoma','Youngoose','player')
+
+# We can use the pre-trained model to obtain higher performance
+#load_from = 'checkpoints/yolox_l_8x8_300e_coco_20211126_140236-d3bd2b23.pth'
+load_from = '/home/pokemon-sv-work_dirs/checkpoints/yolox_s.pth'
+# "H:\マイドライブ\PROJECT\201_HaMaruki\201_60_PokemonSV\Pokemon-SV-Work_dirs\yolox_s_8x8_300e_PokeSVcoco_v2.1.0_0900\epoch_80.pth"
 
 
 # model settings
@@ -14,25 +26,20 @@ model = dict(
     input_size=img_scale,
     random_size_range=(15, 25),
     random_size_interval=10,
-    # backbone=dict(type='CSPDarknet', deepen_factor=0.33, widen_factor=0.5),
-    backbone=dict(type='CSPDarknet', deepen_factor=1.0, widen_factor=1.0),
+    backbone=dict(type='CSPDarknet', deepen_factor=0.33, widen_factor=0.5),
     neck=dict(
         type='YOLOXPAFPN',
-        in_channels=[256, 512, 1024], # in_channels=[128, 256, 512],
-        out_channels=256, # out_channels=128,
-        num_csp_blocks=3), # num_csp_blocks=1),
+        in_channels=[128, 256, 512],
+        out_channels=128,
+        num_csp_blocks=1),
     bbox_head=dict(
-        # type='YOLOXHead', num_classes=80, in_channels=128, feat_channels=128),
-        type='YOLOXHead', num_classes=len(classes), in_channels=256, feat_channels=256),
+        type='YOLOXHead', num_classes=len(classes), in_channels=128, feat_channels=128),
     train_cfg=dict(assigner=dict(type='SimOTAAssigner', center_radius=2.5)),
     # In order to align the source code, the threshold of the val phase is
     # 0.01, and the threshold of the test phase is 0.001.
     test_cfg=dict(score_thr=0.01, nms=dict(type='nms', iou_threshold=0.65)))
 
-# dataset settings
-# data_root = 'data/coco/'
-data_root = '/content/drive/MyDrive/PROJECT/201_HaMaruki/201_60_PokemonSV/Pokemon-SV-Datasets/datasets/v1.0/'
-dataset_type = 'CocoDataset'
+
 
 train_pipeline = [
     dict(type='Mosaic', img_scale=img_scale, pad_val=114.0),
@@ -94,10 +101,9 @@ test_pipeline = [
             dict(type='Collect', keys=['img'])
         ])
 ]
-
 data = dict(
-    samples_per_gpu=3,
-    workers_per_gpu=3,
+    samples_per_gpu=1,
+    workers_per_gpu=1,
     persistent_workers=True,
     train=train_dataset,
     val=dict(
@@ -124,7 +130,7 @@ optimizer = dict(
     paramwise_cfg=dict(norm_decay_mult=0., bias_decay_mult=0.))
 optimizer_config = dict(grad_clip=None)
 
-max_epochs = 500
+max_epochs = 300
 num_last_epochs = 15
 resume_from = None
 interval = 10
@@ -162,6 +168,7 @@ custom_hooks = [
     #     priority=49)
 ]
 
+
 checkpoint_config = dict(interval=interval)
 evaluation = dict(
     save_best='auto',
@@ -178,7 +185,7 @@ evaluation = dict(
 #
 # log_config = dict(interval=50)
 log_config = dict(  # config to register logger hook
-    interval=50,  # Interval to print the log
+    interval=10,  # Interval to print the log
     hooks=[
         dict(type='TensorboardLoggerHook')  # The Tensorboard logger is also supported
         # dict(type='TextLoggerHook')
@@ -189,8 +196,3 @@ log_config = dict(  # config to register logger hook
 # USER SHOULD NOT CHANGE ITS VALUES.
 # base_batch_size = (8 GPUs) x (8 samples per GPU)
 auto_scale_lr = dict(base_batch_size=64)
-
-
-# We can use the pre-trained model to obtain higher performance
-#load_from = 'checkpoints/yolox_l_8x8_300e_coco_20211126_140236-d3bd2b23.pth'
-load_from = 'work_dirs/yolox_s_8x8_300e_PokeSVcoco_v1_300/epoch_300.pth'
