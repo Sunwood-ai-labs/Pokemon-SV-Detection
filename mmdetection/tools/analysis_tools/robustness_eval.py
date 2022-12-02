@@ -33,10 +33,10 @@ def print_coco_results(results):
 
 
 def get_coco_style_results(filename,
-                           task='bbox',
-                           metric=None,
-                           prints='mPC',
-                           aggregate='benchmark'):
+                            task='bbox',
+                            metric=None,
+                            prints='mPC',
+                            aggregate='benchmark'):
 
     assert aggregate in ['benchmark', 'all']
 

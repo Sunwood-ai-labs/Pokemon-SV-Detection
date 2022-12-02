@@ -1,0 +1,1 @@
+docker-compose exec poke_poke_mmdetection /bin/bash

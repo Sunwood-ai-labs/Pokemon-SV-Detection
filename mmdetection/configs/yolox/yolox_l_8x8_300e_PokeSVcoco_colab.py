@@ -3,10 +3,21 @@ _base_ = ['../_base_/schedules/schedule_1x.py', '../_base_/default_runtime.py']
 img_scale = (640, 640)  # height, width
 
 
-classes = ('Delvil', 'Digda', 'Gourton', 'Hanecco', 'Hellgar', \
-            'Hogator', 'Kofukimushi', 'Koraidon', 'Kuwassu', 'Nyahoja', \
-            'Tarountula', 'Yayakoma', 'Youngoose', 'player', )
+classes = ('Amemoth','Ametama','Bassrao','Buoysel','Capsakid','Clodsire','Delvil','Digda','Dojoach','Donmel','Dorobanko','Eleson','Ennewt','Flamigo','Flittle','Floragato','Fuwante','Ghos','Gomazou','Gourton','Hanecco','Hellgar','Himanuts','Hinoyakoma','Hogator','Hoshigarisu','Iwanko','Kamukame','Kirlia','Koduck','Kofukimushi','Koiking','Koraidon','Kuwassu','Makunoshita','Mankey','Maril','Maschiff','Meecle','Merriep','Mibrim','Mukubird','Nacli','Nokocchi','Numera','Nyahoja','Nymble','Pamo','Pawmo','Pichu','Pinpuku','Popocco','Pupimocchi','Pupurin','Purin','Ralts','Riolu','Ruriri','Shikijika','Shroodle','Sleepe','Smoliv','Squawkabilly','Strike','Tadbulb','Tamagetake','Tandon','Tarountula','Tyltto','Upah','Usohachi','Watacco','Yamikarasu','Yayakoma','Youngoose','player')
 
+# dataset settings
+# data_root = 'data/coco/'
+data_root = '/content/drive/MyDrive/PROJECT/201_HaMaruki/201_60_PokemonSV/Pokemon-SV-Datasets/datasets/v2.2/'
+dataset_type = 'CocoDataset'
+# data_root = '/home/Pokemon-SV-Datasets/datasets/v1.0/'
+# dataset_type = 'CocoDataset'
+
+# We can use the pre-trained model to obtain higher performance
+# load_from = 'checkpoints/yolox_l_8x8_300e_coco_20211126_140236-d3bd2b23.pth'
+# load_from = 'work_dirs/yolox_s_8x8_300e_PokeSVcoco_v1_300/epoch_300.pth'
+# load_from = '/content/drive/MyDrive/PROJECT/201_HaMaruki/201_60_PokemonSV/Pokemon-SV-Detection/mmdetection/work_dirs/yolox_s_8x8_300e_PokeSVcoco_v1.0_600/epoch_90.pth'
+load_from = '/content/drive/MyDrive/PROJECT/201_HaMaruki/201_60_PokemonSV/Pokemon-SV-Work_dirs/yolox_l_8x8_300e_PokeSVcoco_v2.2.1_0100/epoch_280.pth'
+# load_from = 'work_dirs/yolox_s_8x8_300e_PokeSVcoco_v1.0_600/epoch_90.pth'
 
 # model settings
 model = dict(
@@ -29,12 +40,7 @@ model = dict(
     # 0.01, and the threshold of the test phase is 0.001.
     test_cfg=dict(score_thr=0.01, nms=dict(type='nms', iou_threshold=0.65)))
 
-# dataset settings
-# data_root = 'data/coco/'
-data_root = '/content/drive/MyDrive/PROJECT/201_HaMaruki/201_60_PokemonSV/Pokemon-SV-Datasets/datasets/v1.0/'
-dataset_type = 'CocoDataset'
-# data_root = '/home/Pokemon-SV-Datasets/datasets/v1.0/'
-# dataset_type = 'CocoDataset'
+
 
 train_pipeline = [
     dict(type='Mosaic', img_scale=img_scale, pad_val=114.0),
@@ -192,9 +198,3 @@ log_config = dict(  # config to register logger hook
 # base_batch_size = (8 GPUs) x (8 samples per GPU)
 auto_scale_lr = dict(base_batch_size=64)
 
-
-# We can use the pre-trained model to obtain higher performance
-# load_from = 'checkpoints/yolox_l_8x8_300e_coco_20211126_140236-d3bd2b23.pth'
-# load_from = 'work_dirs/yolox_s_8x8_300e_PokeSVcoco_v1_300/epoch_300.pth'
-load_from = '/content/drive/MyDrive/PROJECT/201_HaMaruki/201_60_PokemonSV/Pokemon-SV-Detection/mmdetection/work_dirs/yolox_s_8x8_300e_PokeSVcoco_v1.0_600/epoch_90.pth'
-# load_from = 'work_dirs/yolox_s_8x8_300e_PokeSVcoco_v1.0_600/epoch_90.pth'
