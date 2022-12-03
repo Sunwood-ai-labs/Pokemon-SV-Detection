@@ -16,7 +16,7 @@ classes = ('Amemoth','Ametama','Bassrao','Buoysel','Capsakid','Clodsire','Delvil
 
 # We can use the pre-trained model to obtain higher performance
 #load_from = 'checkpoints/yolox_l_8x8_300e_coco_20211126_140236-d3bd2b23.pth'
-load_from = '/home/pokemon-sv-work_dirs/checkpoints/yolox_s.pth'
+load_from = "/home/pokemon-sv-work_dirs/yolox_s_8x8_300e_PokeSVcoco_v2.2.9_0300/epoch_280.pth"
 # "H:\マイドライブ\PROJECT\201_HaMaruki\201_60_PokemonSV\Pokemon-SV-Work_dirs\yolox_s_8x8_300e_PokeSVcoco_v2.1.0_0900\epoch_80.pth"
 
 
