@@ -18,8 +18,8 @@ from mmdet.apis import init_random_seed, set_random_seed, train_detector
 from mmdet.datasets import build_dataset
 from mmdet.models import build_detector
 from mmdet.utils import (collect_env, get_device, get_root_logger,
-                         replace_cfg_vals, setup_multi_processes,
-                         update_data_root)
+                            replace_cfg_vals, setup_multi_processes,
+                            update_data_root)
 
 
 def parse_args():
@@ -126,10 +126,10 @@ def main():
             cfg.auto_scale_lr.enable = True
         else:
             warnings.warn('Can not find "auto_scale_lr" or '
-                          '"auto_scale_lr.enable" or '
-                          '"auto_scale_lr.base_batch_size" in your'
-                          ' configuration file. Please update all the '
-                          'configuration files to mmdet >= 2.24.1.')
+                            '"auto_scale_lr.enable" or '
+                            '"auto_scale_lr.base_batch_size" in your'
+                            ' configuration file. Please update all the '
+                            'configuration files to mmdet >= 2.24.1.')
 
     # set multi-process settings
     setup_multi_processes(cfg)
@@ -153,14 +153,14 @@ def main():
     if args.gpus is not None:
         cfg.gpu_ids = range(1)
         warnings.warn('`--gpus` is deprecated because we only support '
-                      'single GPU mode in non-distributed training. '
-                      'Use `gpus=1` now.')
+                        'single GPU mode in non-distributed training. '
+                        'Use `gpus=1` now.')
     if args.gpu_ids is not None:
         cfg.gpu_ids = args.gpu_ids[0:1]
         warnings.warn('`--gpu-ids` is deprecated, please use `--gpu-id`. '
-                      'Because we only support single GPU mode in '
-                      'non-distributed training. Use the first GPU '
-                      'in `gpu_ids` now.')
+                        'Because we only support single GPU mode in '
+                        'non-distributed training. Use the first GPU '
+                        'in `gpu_ids` now.')
     if args.gpus is None and args.gpu_ids is None:
         cfg.gpu_ids = [args.gpu_id]
 

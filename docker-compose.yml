@@ -3,7 +3,10 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    shm_size: '16gb'
     image: nvcr.io/nvidia/pytorch:22.10-py3
+    environment:
+      - CUDA_LAUNCH_BLOCKING=1
     # コンテナ名を明示的に指定する
     # container_name: nvidia_pytorch-container
     deploy:
@@ -29,43 +32,55 @@ services:
     tty:
       true
 
-  label_studio_ml:
-    build:
-      context: .
-      dockerfile: Dockerfile_ml
-    image: nvcr.io/nvidia/pytorch:22.10-py3
-    # container_name: web-container
-    
-    environment:
-      # ---------------------------------------------
-      # label-studio-ml param 
-      #
-      - LABEL_STUDIO_HOSTNAME=http://192.168.0.100:8080/
-      # - config_file=/home/checkpoints/faster_rcnn_r50_fpn_1x_coco.py
-      # - checkpoint_file=/home/checkpoints/faster_rcnn_r50_fpn_1x_coco_20200130-047c8118.pth
-      - config_file=/home/Pokemon-SV-Detection/mmdetection/configs/yolox/yolox_s_8x8_300e_PokeSVcoco.py
-      - checkpoint_file=/home/pokemon-sv-work_dirs/yolox_s_8x8_300e_PokeSVcoco_v1.3_600/epoch_600.pth
-      - device=cuda:0
-
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: 1
-              capabilities: [gpu]
+  tb:
+    image: tensorflow/tensorflow:latest-gpu-py3
     volumes:
-      - .:/home/Pokemon-SV-Detection/
-      - D:\PROJECT\201_HaMaruki\201_60_PokemonSV\Pokemon-SV-Work_dirs:/home/pokemon-sv-work_dirs
-    working_dir: /home/Pokemon-SV-Detection/label-studio-ml-backend
+      - D:\PROJECT\201_HaMaruki\201_60_PokemonSV\Pokemon-SV-Work_dirs:/home/pokemon-sv-Work_dirs
+    working_dir: /home
     ports:
-      - "5555:5555"
-    # command:
-      # /bin/bash -c "cd /root/label-studio-ml-backend/ && \
-      # label-studio-ml start coco-detector --port=7777 "
-      # /bin/bash -c "python mmdetection/mmdet/utils/collect_env.py"
-    #   #   jupyter-lab --ip 0.0.0.0 --allow-root -b localhost --port=6666
-    #   #jupyter notebook --port=6666 --ip=0.0.0.0 --allow-root --NotebookApp.token=''
-    #   nvidia-smi
+      - "6006:6006"
+    command:
+      tensorboard --logdir=/home/pokemon-sv-Work_dirs --bind_all
+      # tensorboard --logdir=Pokemon-SV-Work_dirs --bind_all --port=7777
+    
 
-    tty: true
+  # label_studio_ml:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile_ml
+  #   image: nvcr.io/nvidia/pytorch:22.10-py3
+  #   # container_name: web-container
+    
+  #   environment:
+  #     # ---------------------------------------------
+  #     # label-studio-ml param 
+  #     #
+  #     - LABEL_STUDIO_HOSTNAME=http://192.168.0.100:8080/
+  #     # - config_file=/home/checkpoints/faster_rcnn_r50_fpn_1x_coco.py
+  #     # - checkpoint_file=/home/checkpoints/faster_rcnn_r50_fpn_1x_coco_20200130-047c8118.pth
+  #     - config_file=/home/Pokemon-SV-Detection/mmdetection/configs/yolox/yolox_s_8x8_300e_PokeSVcoco.py
+  #     - checkpoint_file=/home/pokemon-sv-work_dirs/yolox_s_8x8_300e_PokeSVcoco_v1.3_600/epoch_600.pth
+  #     - device=cuda:0
+
+  #   deploy:
+  #     resources:
+  #       reservations:
+  #         devices:
+  #           - driver: nvidia
+  #             count: 1
+  #             capabilities: [gpu]
+  #   volumes:
+  #     - .:/home/Pokemon-SV-Detection/
+  #     - D:\PROJECT\201_HaMaruki\201_60_PokemonSV\Pokemon-SV-Work_dirs:/home/pokemon-sv-work_dirs
+  #   working_dir: /home/Pokemon-SV-Detection/label-studio-ml-backend
+  #   ports:
+  #     - "5555:5555"
+  #   # command:
+  #     # /bin/bash -c "cd /root/label-studio-ml-backend/ && \
+  #     # label-studio-ml start coco-detector --port=7777 "
+  #     # /bin/bash -c "python mmdetection/mmdet/utils/collect_env.py"
+  #   #   #   jupyter-lab --ip 0.0.0.0 --allow-root -b localhost --port=6666
+  #   #   #jupyter notebook --port=6666 --ip=0.0.0.0 --allow-root --NotebookApp.token=''
+  #   #   nvidia-smi
+
+  #   tty: true
