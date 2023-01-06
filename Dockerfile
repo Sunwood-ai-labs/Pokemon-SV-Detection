@@ -33,4 +33,6 @@ RUN pip install boto3
 # -------------------------------------
 # notebook
 #
-RUN pip install notebook
+# RUN pip install notebook
+RUN python3 -m pip install --upgrade pip # pipのアップデート
+RUN python3 -m pip install jupyterlab
