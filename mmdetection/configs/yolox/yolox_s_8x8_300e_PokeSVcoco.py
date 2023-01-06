@@ -1,6 +1,8 @@
-_base_ = ['../_base_/schedules/schedule_1x.py', '../_base_/default_runtime.py']
+# _base_ = ['../_base_/schedules/schedule_1x.py', '../_base_/default_runtime.py']
+_base_ = ['../_base_/schedules/schedule_2x.py', '../_base_/default_runtime.py']
 
-img_scale = (640, 640)  # height, width
+# img_scale = (640, 640)  # height, width
+img_scale = (960, 960)  # height, width
 
 
 # dataset settings
@@ -16,7 +18,8 @@ classes = ('Amemoth','Ametama','Bassrao','Buoysel','Capsakid','Clodsire','Delvil
 
 # We can use the pre-trained model to obtain higher performance
 #load_from = 'checkpoints/yolox_l_8x8_300e_coco_20211126_140236-d3bd2b23.pth'
-load_from = "/home/pokemon-sv-work_dirs/yolox_s_8x8_300e_PokeSVcoco_v2.2.9_0300/epoch_280.pth"
+load_from = "/home/pokemon-sv-work_dirs/yolox_s_8x8_300e_PokeSVcoco_v2.2.13_0900/epoch_300.pth"
+# resume_from = "/home/pokemon-sv-work_dirs/yolox_s_8x8_300e_PokeSVcoco_v2.2.10_0600/epoch_300.pth"
 # "H:\マイドライブ\PROJECT\201_HaMaruki\201_60_PokemonSV\Pokemon-SV-Work_dirs\yolox_s_8x8_300e_PokeSVcoco_v2.1.0_0900\epoch_80.pth"
 
 
@@ -121,18 +124,33 @@ data = dict(
 
 # optimizer
 # default 8 gpu
+# optimizer = dict(
+#     type='SGD',
+#     # lr=0.01,
+#     lr=8e-4,
+#     momentum=0.9,
+#     weight_decay=5e-4,
+#     nesterov=True,
+#     paramwise_cfg=dict(norm_decay_mult=0., bias_decay_mult=0.))
+# optimizer = dict(type='Adam', lr=8e-4, weight_decay=5e-4)
 optimizer = dict(
-    type='SGD',
-    lr=0.01,
-    momentum=0.9,
-    weight_decay=5e-4,
-    nesterov=True,
-    paramwise_cfg=dict(norm_decay_mult=0., bias_decay_mult=0.))
+    _delete_=True,
+    type='AdamW',
+    lr=0.00006,
+    betas=(0.9, 0.999),
+    weight_decay=0.01,
+    paramwise_cfg=dict(
+        custom_keys={
+            'pos_block': dict(decay_mult=0.),
+            'norm': dict(decay_mult=0.),
+            'head': dict(lr_mult=10.)
+        }))
+
 optimizer_config = dict(grad_clip=None)
 
 max_epochs = 300
 num_last_epochs = 15
-resume_from = None
+
 interval = 10
 
 # learning policy
